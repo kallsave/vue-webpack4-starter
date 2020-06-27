@@ -31,6 +31,7 @@ module.exports = {
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
+    chunkFilename: '[name].js',
     publicPath: process.env.NODE_ENV === 'development'
       ? config.dev.assetsPublicPath
       : config.build.assetsPublicPath
@@ -45,7 +46,13 @@ module.exports = {
   optimization: {
     splitChunks: {
       chunks: 'async',
+      name: true,
       cacheGroups: {
+        common: {
+          name: 'common',
+          chunks: 'initial',
+          minChunks: 2
+        },
         vendor: {
           name: 'vendor',
           test: /[\\/]node_modules[\\/]/,
@@ -98,8 +105,8 @@ module.exports = {
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // all options are optional
-      filename: '[name].css',
-      chunkFilename: '[id].css',
+      filename: utils.assetsPath('css/[name].[chunkhash].css'),
+      chunkFilename: utils.assetsPath('css/[id].[chunkhash].css'),
       ignoreOrder: false, // Enable to remove warnings about conflicting order
     }),
     // https://github.com/ampedandwired/html-webpack-plugin
