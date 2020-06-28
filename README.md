@@ -19,8 +19,3 @@
 - 1. babel7的包以@babel开头
 - 2. babel7带来了"useBuiltIns": "usage",这个属性会根据配置的browsers去core-js里面按需加载全局垫片polyfill。而babel6是通过babel-plugin-transform-runtime来自动按需加载局部垫片(不污染全局API而是使用沙箱模式),但是babel6无法编译类似Array.includes这种API
 - 3. babel7的一些插件依然没有,有时候要同时使用babel7和babel6的插件
-
-## 最后
-- 由于wepback,babel的插件更新频繁和本人水平有限,模板报错和优化欢迎issue,pr.
-- star让更多人来维护下去
-
