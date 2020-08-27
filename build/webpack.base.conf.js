@@ -105,8 +105,8 @@ module.exports = {
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // all options are optional
-      filename: utils.assetsPath('css/[name].[chunkhash].css'),
-      chunkFilename: utils.assetsPath('css/[id].[chunkhash].css'),
+      filename: utils.assetsPath('css/[name].[contenthash].css'),
+      chunkFilename: utils.assetsPath('css/[id].[contenthash].css'),
       ignoreOrder: false, // Enable to remove warnings about conflicting order
     }),
     // https://github.com/ampedandwired/html-webpack-plugin
