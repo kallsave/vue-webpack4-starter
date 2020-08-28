@@ -4,7 +4,6 @@ const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 function resolve(dir) {
@@ -102,13 +101,6 @@ module.exports = {
   },
   plugins: [
     new VueLoaderPlugin(),
-    new MiniCssExtractPlugin({
-      // Options similar to the same options in webpackOptions.output
-      // all options are optional
-      filename: utils.assetsPath('css/[name].[contenthash].css'),
-      chunkFilename: utils.assetsPath('css/[id].[contenthash].css'),
-      ignoreOrder: false, // Enable to remove warnings about conflicting order
-    }),
     // https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
       filename: 'index.html',

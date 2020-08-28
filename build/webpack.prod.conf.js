@@ -6,6 +6,7 @@ const config = require('../config')
 const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
@@ -16,7 +17,8 @@ const webpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({
       sourceMap: config.build.productionSourceMap,
-      usePostCSS: true
+      usePostCSS: true,
+      extract: true,
     })
   },
   devtool: config.build.productionSourceMap ? config.build.devtool : false,
@@ -26,6 +28,13 @@ const webpackConfig = merge(baseWebpackConfig, {
     chunkFilename: utils.assetsPath('js/[name].[chunkhash].js')
   },
   plugins: [
+    new MiniCssExtractPlugin({
+      // Options similar to the same options in webpackOptions.output
+      // all options are optional
+      filename: utils.assetsPath('css/[name].[contenthash].css'),
+      chunkFilename: utils.assetsPath('css/[id].[contenthash].css'),
+      ignoreOrder: false // Enable to remove warnings about conflicting order
+    }),
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
       'process.env': env
@@ -38,12 +47,12 @@ const webpackConfig = merge(baseWebpackConfig, {
       patterns: [
         {
           from: path.resolve(__dirname, '../static'),
-          to: config.build.assetsSubDirectory,
+          to: config.build.assetsSubDirectory
         }
       ]
     })
   ]
-})
+});
 
 if (config.build.productionGzip) {
   const CompressionWebpackPlugin = require('compression-webpack-plugin')
