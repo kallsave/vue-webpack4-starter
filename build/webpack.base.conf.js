@@ -31,15 +31,16 @@ module.exports = {
     path: config.build.assetsRoot,
     filename: '[name].js',
     chunkFilename: '[name].js',
-    publicPath: process.env.NODE_ENV === 'development'
-      ? config.dev.assetsPublicPath
-      : config.build.assetsPublicPath
+    publicPath:
+      process.env.NODE_ENV === 'development'
+        ? config.dev.assetsPublicPath
+        : config.build.assetsPublicPath
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
-      'vue$': 'vue/dist/vue.esm.js',
-      '@': resolve('src'),
+      vue$: 'vue/dist/vue.esm.js',
+      '@': resolve('src')
     }
   },
   optimization: {
@@ -52,11 +53,17 @@ module.exports = {
           chunks: 'initial',
           minChunks: 2
         },
-        vendor: {
-          name: 'vendor',
+        vendors: {
+          name: 'vendors',
           test: /[\\/]node_modules[\\/]/,
           chunks: 'all'
-        }
+        },
+        'async-vendors': {
+          test: /[\\/]node_modules[\\/]/,
+          minChunks: 1,
+          chunks: 'async',
+          name: 'async-vendors'
+        },
       }
     }
   },
@@ -71,7 +78,11 @@ module.exports = {
       {
         test: /\.js$/,
         loader: 'babel-loader',
-        include: [resolve('src'), resolve('test'), resolve('node_modules/webpack-dev-server/client')]
+        include: [
+          resolve('src'),
+          resolve('test'),
+          resolve('node_modules/webpack-dev-server/client')
+        ]
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
@@ -106,7 +117,7 @@ module.exports = {
       filename: 'index.html',
       template: 'index.html',
       inject: true
-    }),
+    })
   ],
   node: {
     // prevent webpack from injecting useless setImmediate polyfill because Vue
@@ -120,4 +131,4 @@ module.exports = {
     tls: 'empty',
     child_process: 'empty'
   }
-}
+};
